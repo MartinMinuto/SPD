@@ -10,7 +10,7 @@
 ## Descripción
 
 <p align="center">
-<img src = img/Contador.png>
+<img src = ./Img/Contador.png>
 </p>
 
 Contador de 0 a 99 dígitos utilizando la multiplexación en una placa Arduino Uno y dos displays de 7 segmentos. Contiene 3 pulsadores, para aumentar, disminuir y reiniciar la cuenta.
@@ -20,7 +20,7 @@ Contador de 0 a 99 dígitos utilizando la multiplexación en una placa Arduino U
 ## Descripción
 
 <p align="center">
-<img src = img\Segunda_Parte_Contador_0_a_99_automatico.png>
+<img src = ./Img/Segunda_Parte_Contador_0_a_99_automatico.png>
 </p>
 
  Contador automático de 0 a 99. Utiliza un sensor de temperatura TMP36 para determinar el sentido de la cuenta; si la temperatura es menor a 20 °C la cuenta es regresiva; si la temperatura es mayor o igual a 20 °C, la cuenta irá en aumento a la vez que se encederá el motor de aficionado conectado a nuestro dispositivo.
