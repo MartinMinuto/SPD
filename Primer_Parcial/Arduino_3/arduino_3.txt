@@ -1,0 +1,247 @@
+#define B 13
+#define A 12
+#define F 11
+#define G 10
+#define E 9
+#define D 8
+#define C 7
+#define MOTOR 6
+#define INTERRUPTOR 2
+#define UNIDAD A4
+#define DECENAS A5
+#define GREEN 5
+#define YELLOW 4
+#define RED 3
+
+#define APAGADOS 0
+#define TIEMPO_DISPLAY_ON 15
+
+void setup()
+{
+  pinMode(A, OUTPUT);
+  pinMode(B, OUTPUT);
+  pinMode(C, OUTPUT);
+  pinMode(D, OUTPUT);
+  pinMode(E, OUTPUT);
+  pinMode(F, OUTPUT);
+  pinMode(G, OUTPUT);
+  pinMode(GREEN, OUTPUT);
+  pinMode(YELLOW, OUTPUT);
+  pinMode(RED, OUTPUT);
+  pinMode(MOTOR, OUTPUT);
+  pinMode(INTERRUPTOR, INPUT_PULLUP);
+  pinMode(UNIDAD, OUTPUT);
+  pinMode(DECENAS, OUTPUT);
+  digitalWrite(UNIDAD, 0);
+  digitalWrite(DECENAS, 0);
+  encenderDigito(0);  
+  Serial.begin(9600);  
+}
+
+
+int interruptor = 0;
+int segundos_ahora = 0;
+int segundos_anterior = -1;
+int contador = -1;
+int temperaturaRead = 0;
+int temperatura = 0;
+int fotoresistencia = A1;
+
+
+void loop()
+{  
+   temperaturaRead = analogRead(A0);
+   temperatura = map(temperaturaRead,20,358,-40,125);
+   int interruptor = digitalRead(INTERRUPTOR);
+   if (segundos_ahora != segundos_anterior)
+   { 
+      if (temperatura >= 20)
+      {
+        contador++;
+        digitalWrite(MOTOR,HIGH);
+        if (contador > 99)
+        {
+          contador = 0;
+        }
+      }
+      else
+      { 
+        if (contador  == 0)
+   		{
+      		contador = 100;
+   		}
+        contador--;
+        digitalWrite(MOTOR,LOW);
+      }
+      if (interruptor)
+      {  
+         contador = interruptor_on(contador,temperatura);
+          
+      }
+      segundos_anterior = segundos_ahora; 
+    }
+
+  	int lectura = analogRead(fotoresistencia);
+  
+    if(lectura < 300)
+    {
+      digitalWrite(GREEN, LOW);
+      digitalWrite(YELLOW, LOW);
+      digitalWrite(RED, LOW);      
+    }
+    else if(lectura >= 300 && lectura < 500)
+    {
+      digitalWrite(GREEN, HIGH);
+      digitalWrite(YELLOW, LOW);
+      digitalWrite(RED, LOW);
+    }
+    else if(lectura >= 500 && lectura < 700)
+    {
+      digitalWrite(GREEN, HIGH);
+      digitalWrite(YELLOW, HIGH);
+      digitalWrite(RED, LOW);
+    }
+    else if(lectura >= 700)
+    {
+      digitalWrite(GREEN, HIGH);
+      digitalWrite(YELLOW, HIGH);
+      digitalWrite(RED, HIGH);      
+    }
+
+    delay(100);
+  
+    imprimirCuenta(contador);
+    segundos_ahora = millis()/1000;
+    delay(TIEMPO_DISPLAY_ON);  
+}
+
+
+
+void imprimirDigito(int n)
+{
+  apagarLeds();
+  switch (n){
+    case 0:
+      encenderLeds(HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,LOW);
+    break;
+    case 1:
+      encenderLeds(LOW,HIGH,HIGH,LOW,LOW,LOW,LOW);
+    break;
+    case 2:
+      encenderLeds(HIGH,HIGH,LOW,HIGH,HIGH,LOW,HIGH);
+    break;
+    case 3:
+      encenderLeds(HIGH,HIGH,HIGH,HIGH,LOW,LOW,HIGH);
+    break;
+    case 4:
+       encenderLeds(LOW,HIGH,HIGH,LOW,LOW,HIGH,HIGH);
+    break;
+    case 5:
+      encenderLeds(HIGH,LOW,HIGH,HIGH,LOW,HIGH,HIGH);
+    break;
+    case 6:
+      encenderLeds(LOW,LOW,HIGH,HIGH,HIGH,HIGH,HIGH);
+    break;
+    case 7:
+      encenderLeds(HIGH,HIGH,HIGH,LOW,LOW,LOW,LOW);
+    break;
+    case 8:
+      encenderLeds(HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH);
+    break;
+    case 9:
+      encenderLeds(HIGH,HIGH,HIGH,LOW,LOW,HIGH,HIGH);
+    break;
+  }	
+}
+
+void apagarLeds()
+{
+  	digitalWrite(A, LOW);
+    digitalWrite(B, LOW);
+    digitalWrite(C, LOW);
+    digitalWrite(D, LOW);
+    digitalWrite(E, LOW);
+    digitalWrite(F, LOW);
+    digitalWrite(G, LOW);
+}
+
+void encenderLeds(int estado_A,int estado_B,int estado_C,int estado_D,int estado_E,int estado_F,int estado_G)
+{
+    digitalWrite(A, estado_A);
+    digitalWrite(B, estado_B);
+    digitalWrite(C, estado_C);
+    digitalWrite(D, estado_D);
+    digitalWrite(E, estado_E);
+    digitalWrite(F, estado_F);
+    digitalWrite(G, estado_G);
+}
+
+void encenderDigito(int digito)
+{
+	if (digito == UNIDAD)
+    {
+      digitalWrite(UNIDAD,LOW);
+      digitalWrite(DECENAS, HIGH);
+      delay(TIEMPO_DISPLAY_ON);
+    }
+  	else if (digito == DECENAS)
+    {
+      digitalWrite(DECENAS,LOW);
+      digitalWrite(UNIDAD, HIGH);
+      delay(TIEMPO_DISPLAY_ON);
+    }
+  	else
+    {
+      digitalWrite(UNIDAD, HIGH);
+      digitalWrite(DECENAS,HIGH); 
+    }
+}
+                  
+void imprimirCuenta(int contador)
+{
+    encenderDigito(APAGADOS);
+    imprimirDigito(contador/10);
+    encenderDigito(DECENAS);
+    encenderDigito(APAGADOS);
+    imprimirDigito(contador - 10*((int)contador / 10));
+    encenderDigito(UNIDAD);
+}
+
+
+int interruptor_on(int contador, int temperatura)
+{  
+  while (true)
+  {
+     if (Primo(contador))
+     {
+        return contador;
+        break;   
+     }
+     else if (temperatura >= 20)
+     {
+        contador++;
+        if (contador == 99)
+        {
+          contador = 1;
+        }
+     }
+     else
+     {
+       contador--;
+     }
+  }
+     	
+  return contador;
+}
+
+bool Primo(int n)
+{
+  for(int i =2; i <n; i++)
+  {
+    if (n % i == 0)
+    {
+      return false;
+    }
+  }
+  return true;
+}

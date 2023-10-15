@@ -1,5 +1,7 @@
 # Ejemplo Documentación 
+<p align="center">
 <img src =./Img/ArduinoTinkercad.jpg>
+</p>
 
 ## Integrantes 
 - Luján Miguel
@@ -29,6 +31,11 @@ Contador de 0 a 99 dígitos utilizando la multiplexación en una placa Arduino U
 ## Proyecto: Modificación según el Último Número de Documento
 
 ## Descripción
+
+<p align="center">
+<img src = ./Img/Tercera.png>
+</p>
+
 
 ### [Funciones principales]()
 Esta función se encarga de controlar la multiplexación.
@@ -100,6 +107,10 @@ Los motores de aficionados son frecuentes para accionar ruedas de robots y vehí
   
 Es un dispositivo mecánico desplazable para aplicaciones de ON y OFF ya que puede abrir o cerrar el paso de corriente de un circuito. El interruptor deslizable tiene 3 pines, se puede implementarl para desviar o interrumpir el curso de una corriente eléctrica de algunas placas o módulos de electrónica. En nuestro proyecto lo incorporamos para cumplir con un control lógico, para habilitar un funcionamiento en específico.
 
++ Fotorresistencia
+
+Una fotorresistencia es una resistencia, cuyo valor en ohmios, varía ante las variaciones de la luz. Estas resistencias están construidas con un material sensible a la luz, de tal manera que cuando la luz incide sobre su superficie, el material sufre una reacción química, alterando su resistencia eléctrica.
+###
 
 ### :eyes: [Link al proyecto]()
 + [Proyecto Parte 1](https://www.tinkercad.com/things/5Z7G48YTEfT)
