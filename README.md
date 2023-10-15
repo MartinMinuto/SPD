@@ -1,5 +1,5 @@
 # Ejemplo Documentación 
-![Tinkercad](./img/ArduinoTinkercad.jpg)
+<img src =./Img/ArduinoTinkercad.jpg>
 
 ## Integrantes 
 - Luján Miguel
