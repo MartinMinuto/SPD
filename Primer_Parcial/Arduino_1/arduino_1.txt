@@ -1,0 +1,198 @@
+#define B 13
+#define A 12
+#define F 11
+#define G 10
+#define E 9
+#define D 8
+#define C 7
+#define SUBE 6
+#define BAJA 5
+#define RESET 4
+#define UNIDAD A4
+#define DECENAS A5
+
+#define APAGADOS 0
+#define TIEMPO_DISPLAY_ON 10
+
+
+void setup(){
+ pinMode(A, OUTPUT);
+ pinMode(B, OUTPUT);
+ pinMode(C, OUTPUT);
+ pinMode(D, OUTPUT);
+ pinMode(E, OUTPUT);
+ pinMode(F, OUTPUT);
+ pinMode(G, OUTPUT); 
+ pinMode(SUBE, INPUT_PULLUP);
+ pinMode(BAJA, INPUT_PULLUP);
+ pinMode(RESET, INPUT_PULLUP);
+ pinMode(UNIDAD, OUTPUT);
+ pinMode(DECENAS, OUTPUT);
+ digitalWrite(UNIDAD, 0);
+ digitalWrite(DECENAS, 0);
+ encenderDigito(0);  
+}
+
+int contador = 0;
+int sube_ahora = 1;
+int sube_anterior = 1;
+int baja_ahora = 1;
+int baja_anterior = 1;
+int reset_ahora = 1;
+int reset_anterior = 1;
+
+void loop()
+{
+    int presionado = keypresionada();
+    if (presionado == SUBE)
+    {
+      contador ++;
+      if (contador > 99)
+      {
+        contador = 0;
+      }
+    }
+  	else if (presionado == BAJA)
+    {
+      contador --;
+      if (contador < 0)
+      {
+        contador = 99;
+      }
+    }
+  	else if (presionado == RESET)
+    {
+      contador = 0;
+    }
+  
+  imprimirCuenta(contador);
+}
+
+
+void imprimirDigito(int n)
+{
+  apagarLeds();
+  switch (n){
+    case 0:
+      encenderLeds(HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,LOW);
+    break;
+    case 1:
+      encenderLeds(LOW,HIGH,HIGH,LOW,LOW,LOW,LOW);
+    break;
+    case 2:
+      encenderLeds(HIGH,HIGH,LOW,HIGH,HIGH,LOW,HIGH);
+    break;
+    case 3:
+      encenderLeds(HIGH,HIGH,HIGH,HIGH,LOW,LOW,HIGH);
+    break;
+    case 4:
+       encenderLeds(LOW,HIGH,HIGH,LOW,LOW,HIGH,HIGH);
+    break;
+    case 5:
+      encenderLeds(HIGH,LOW,HIGH,HIGH,LOW,HIGH,HIGH);
+    break;
+    case 6:
+      encenderLeds(LOW,LOW,HIGH,HIGH,HIGH,HIGH,HIGH);
+    break;
+    case 7:
+      encenderLeds(HIGH,HIGH,HIGH,LOW,LOW,LOW,LOW);
+    break;
+    case 8:
+      encenderLeds(HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH);
+    break;
+    case 9:
+      encenderLeds(HIGH,HIGH,HIGH,LOW,LOW,HIGH,HIGH);
+    break;
+  }	
+}
+
+void apagarLeds()
+{
+  	digitalWrite(A, LOW);
+    digitalWrite(B, LOW);
+    digitalWrite(C, LOW);
+    digitalWrite(D, LOW);
+    digitalWrite(E, LOW);
+    digitalWrite(F, LOW);
+    digitalWrite(G, LOW);
+}
+
+void encenderLeds(int estado_A,int estado_B,int estado_C,int estado_D,int estado_E,int estado_F,int estado_G)
+{
+    digitalWrite(A, estado_A);
+    digitalWrite(B, estado_B);
+    digitalWrite(C, estado_C);
+    digitalWrite(D, estado_D);
+    digitalWrite(E, estado_E);
+    digitalWrite(F, estado_F);
+    digitalWrite(G, estado_G);
+}
+
+void encenderDigito(int digito)
+{
+	if (digito == UNIDAD)
+    {
+      digitalWrite(UNIDAD,LOW);
+      digitalWrite(DECENAS, HIGH);
+      delay(TIEMPO_DISPLAY_ON);
+    }
+  	else if (digito == DECENAS)
+    {
+      digitalWrite(DECENAS,LOW);
+      digitalWrite(UNIDAD, HIGH);
+      delay(TIEMPO_DISPLAY_ON);
+    }
+  	else
+    {
+      digitalWrite(UNIDAD, HIGH);
+      digitalWrite(DECENAS,HIGH); 
+    }
+}
+                  
+void imprimirCuenta(int contador)
+{
+    encenderDigito(APAGADOS);
+    imprimirDigito(contador/10);
+    encenderDigito(DECENAS);
+    encenderDigito(APAGADOS);
+    imprimirDigito(contador - 10*((int)contador / 10));
+    encenderDigito(UNIDAD);
+}
+
+int keypresionada(void)
+{
+    sube_ahora = digitalRead(SUBE);
+    baja_ahora = digitalRead(BAJA);
+    reset_ahora = digitalRead(RESET);
+
+    if (sube_ahora)
+    {
+        sube_anterior = 1;
+    }
+    if (baja_ahora)
+    {
+        baja_anterior = 1;
+    }
+    if (reset_ahora)
+    {
+        reset_anterior = 1;
+    }
+
+    if (sube_ahora == 0 && sube_ahora != sube_anterior)
+    {
+        sube_anterior = sube_ahora;
+        return SUBE;
+    }
+    if (baja_ahora == 0 && baja_ahora != baja_anterior)
+    {
+        baja_anterior = baja_ahora;
+        return BAJA;
+    }
+    if (reset_ahora == 0 && reset_ahora != reset_anterior)
+    {
+        reset_anterior = reset_ahora;
+        return RESET;
+    }
+  return 0;
+}                  
+
