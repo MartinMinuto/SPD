@@ -44,6 +44,10 @@ Recibe el parámetro contador y apaga ambos displays,determina cuál es el dígi
 
 ## Proyecto: Cuarta parte del examen
 
+<p align="center">
+<img src = ./Img/Tercera.png>
+</p>
+
 ## Descripción
 Parte desarollada en clase dependiendo en que posicion este el interruptor deslizable apaga todos componentes o los prende.
 
