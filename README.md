@@ -42,6 +42,10 @@ Contador de 0 a 99 dígitos utilizando la multiplexación en una placa Arduino U
 Esta función se encarga de controlar la multiplexación.
 Recibe el parámetro contador y apaga ambos displays,determina cuál es el dígito a encender  en las decenas y lo muestra; vuelve a apagar ambos displays y luego determina cuál es el dígito a encender en las unidades y lo muestra. Este proceso es realizado a gran velocidad, de manera tal que se hace indetectable para el ojo humano.
 
+## Proyecto: Cuarta parte del examen
+
+## Descripción
+Parte desarollada en clase dependiendo en que posicion este el interruptor deslizable apaga todos componentes o los prende.
 
 ```C++
 void imprimirCuenta(int contador)
@@ -141,6 +145,8 @@ Una fotorresistencia es una resistencia, cuyo valor en ohmios, varía ante las v
 + [Proyecto Parte 1](https://www.tinkercad.com/things/5Z7G48YTEfT)
 + [Proyecto Parte 2](https://www.tinkercad.com/things/doRtzcyFkZG)
 + [Proyecto Parte 3](https://www.tinkercad.com/things/8WAiDwC9C1x)
++ [Proyecto Parte 4](https://www.tinkercad.com/things/5zCF0q4JZKH-cuarta-parte-contador/editel?sharecode=68-ZwVMUBwo8heu20V3pfmVnKo_wjrUPJWesDrkCLvY)
+
   
   
 ### :book: [Fuentes]()
